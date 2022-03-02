@@ -9,7 +9,6 @@
   --ltolive:#808000;
   --darkolive: #63630d;
   --purple: #593261;
-
 }
 
 html {
@@ -23,7 +22,7 @@ h1 {
   text-align: center;
   margin: 0px auto;
   width: 100vw;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 p {

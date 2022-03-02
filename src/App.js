@@ -43,6 +43,20 @@ class App extends Component {
       this.getWeatherData();
     };
 
+    getWeatherAdvice = (temperature) => {
+      if (temperature > 15) {
+        return "You do not need a coat"
+      } else if (!this.state.weatherData) {
+        return "You do need a coat"
+      } else {
+        return "Checking if you need a coat"
+      }
+
+    };
+
+    getTemperature = () => {
+      return Math.round((this.state.weatherData.main.temp -273.15) * 10)/10
+    };
 
 
 // render the following to the browser
@@ -54,8 +68,11 @@ class App extends Component {
       <p>SO YOU DON'T HAVE TO</p>
 
           <div className="inputs">
-            <input onInput={this.onInput}type="text" placeholder="ENTER LOCATION"/>
-            {this.state.error && <p className="errorMessage">That is not a valid location</p>}
+            <input onInput={this.onInput} type="text" 
+                  value={this.state.error ? `Not a valid location` :
+                            this.state.userInput}
+                  placeholder="ENTER LOCATION"/>
+
 {/* This is the error meesage from the State */}
             <button onClick={this.onClick}>TAP TO LOOK OUTSIDE</button>
 
@@ -66,9 +83,8 @@ class App extends Component {
           <div className="weatherModules">
             <div className="moduleTemp">
               {this.state.weatherData.main 
-                ? `Temperature is ` + 
-                (Math.round((this.state.weatherData.main.temp -273.15) * 10)/10
-                    + (String.fromCharCode(0x00B0)) + `c`)
+                ? `Temperature is
+                ${ this.getTemperature() } ${ String.fromCharCode(0x00B0) } c`
                 : <p className="loadingtext">LOADING TEMPERATURE</p>
               }
             </div>
@@ -100,7 +116,8 @@ FOR RAIN IN THE API WEATHER THING
             </div>
 
 {/************************************************/}
-    <p className="greatDay">HAVE A GREAT DAY!</p>
+    <p className="greatDay"> {this.state.weatherData && this.getWeatherAdvice(this.getTemperature)}
+        </p>
       </>
         );
   }
