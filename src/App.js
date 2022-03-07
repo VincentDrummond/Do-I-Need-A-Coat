@@ -20,7 +20,7 @@ class App extends Component {
     async getWeatherData(position) {
 // from this url - replace placename from user input box
     const url =
-      `https://api.openweathermap.org/data/2.5/weather?q=${this.state.userInput}&appid=65a5662c7cd41292f65691204889d191`;
+      `https://api.openweathermap.org/data/2.5/onecall?=q${this.state.userInput}&exclude=hourly,minutely,current,alerts&appid=65a5662c7cd41292f65691204889d191`;
 
 // get the contents of the url using axios
       try {
@@ -47,7 +47,7 @@ class App extends Component {
       if (temperature > 15) {
         return "You do not need a coat"
       } else if (!this.state.weatherData) {
-        return "You do need a coat"
+        return "You probably need a coat"
       } else {
         return "Checking if you need a coat"
       }
@@ -55,7 +55,15 @@ class App extends Component {
     };
 
     getTemperature = () => {
-      return Math.round((this.state.weatherData.main.temp -273.15) * 10)/10
+      return Math.round((this.state.weatherData.daily.temp.day -273.15) * 10)/10
+    };
+
+    getWindspeed = () => {
+      return Math.round(this.state.weatherData.daily.wind_speed * 10)/10
+    };
+
+    getRainChance = () => {
+      return Math.round(this.state.weatherData.daily.pop * 10)/10
     };
 
 
@@ -73,16 +81,15 @@ class App extends Component {
                             this.state.userInput}
                   placeholder="ENTER LOCATION"/>
 
-{/* This is the error meesage from the State */}
             <button onClick={this.onClick}>TAP TO LOOK OUTSIDE</button>
-
-
 
           </div>
 
-          <div className="weatherModules">
+{/************************************************/}
+
+        <div className="weatherModules">
             <div className="moduleTemp">
-              {this.state.weatherData.main 
+              {this.state.weatherData.daily.temp.day
                 ? `Temperature is
                 ${ this.getTemperature() } ${ String.fromCharCode(0x00B0) } c`
                 : <p className="loadingtext">LOADING TEMPERATURE</p>
@@ -93,29 +100,27 @@ class App extends Component {
 {/************************************************/}
 
             <div className="moduleWind">
-              {this.state.weatherData.wind 
-                ? `Windspeed is ` +
-                (Math.round(this.state.weatherData.wind.speed * 10)/10) + `mph`
+              {this.state.weatherData.daily.wind_speed
+                ? `Windspeed is
+                ${ this.getWindspeed() } mph`
                 : <p className="loadingtext">LOADING WINDSPEED</p>
               }
             </div>
 
-{/* **********************************************
+{/************************************************/}
 
-CANNOT USE THIS MODULE AS THERE IS NO PARAMETER
-FOR RAIN IN THE API WEATHER THING
 
             <div className="moduleRain">
-              {this.state.weatherData.main 
-                ? `Chance of rain is ` +
-                (Math.round(this.state.weatherData.main.humidity)
-                  + (String.fromCharCode(0x0025)))
-                : <p className="loadingtext">LOADING CHANCE OF RAIN</p>
+              {this.state.weatherData.daily.pop
+                ? `Chance of rain is
+                ${ this.getRainChance() } ${ String.fromCharCode(0x0025) }`
+                : <p className="loadingtext">LOADING RAIN</p>
               }
-            </div>*/}
             </div>
+        </div>
 
 {/************************************************/}
+
     <p className="greatDay"> {this.state.weatherData && this.getWeatherAdvice(this.getTemperature)}
         </p>
       </>
