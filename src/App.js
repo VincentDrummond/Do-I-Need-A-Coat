@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+const myAPIKey = process.env.REACT_APP_WEATHER_API_KEY
+
 class App extends Component {
   
   state = { weatherData: {}, error: false};
@@ -20,7 +22,7 @@ class App extends Component {
     async getWeatherData(position) {
 // from this url - replace placename from user input box
     const url =
-      `https://api.openweathermap.org/data/2.5/onecall?=q${this.state.userInput}&exclude=hourly,minutely,current,alerts&appid=65a5662c7cd41292f65691204889d191`;
+      `https://api.openweathermap.org/data/2.5/onecall?=q${this.state.userInput}&exclude=hourly,minutely,current,alerts&appid=${myAPIKey}}`;
 
 // get the contents of the url using axios
       try {
@@ -43,8 +45,8 @@ class App extends Component {
       this.getWeatherData();
     };
 
-    getWeatherAdvice = (temperature) => {
-      if (temperature > 15) {
+    getWeatherAdvice = (conditions) => {
+      if (temperature > 15) && (wind_speed < 19) && (pop < 10); {
         return "You do not need a coat"
       } else if (!this.state.weatherData) {
         return "You probably need a coat"
