@@ -57,14 +57,14 @@ class App extends Component {
   //       this.state.weatherData.rain. * 10
   //     ) / 10
   //   );
-  };
+  // };
 
   // render the following to the browser
   render() {
     return (
       <>
+      <div>
         <h1>IS IT COLD OUT?</h1>
-
         <div className="inputs">
           <input
             onInput={this.onInput}
@@ -78,8 +78,7 @@ class App extends Component {
           <button onClick={this.onClick}>CHECKING OUTSIDE...</button>
         </div>
 
-        {/************************************************/}
-
+{/* 
         <div className="weatherModules">
           <div className="moduleTemp">
             {this.state.weatherData.main.temp ? (
@@ -87,10 +86,10 @@ class App extends Component {
                 ${this.getTemperature()} ${String.fromCharCode(0x00b0)} c`
             ) : (
               <p className="loadingtext">LOADING TEMPERATURE</p>
-            )}
+            )};
           </div>
-          </>
-{/* 
+          </div>
+
           <div className="moduleWind">
             {this.state.weatherData.wind.wind.speed ? (
               `Windspeed is
@@ -101,7 +100,7 @@ class App extends Component {
           </div> */}
 
 
-          {/* <div className="moduleRain">
+          <div className="moduleRain">
             {this.state.weatherData.precipitation.precipitation.value ? (
               `Chance of rain is
                 ${this.getRainChance()} ${String.fromCharCode(0x0025)}`
@@ -109,15 +108,12 @@ class App extends Component {
               <p className="loadingtext">LOADING RAIN</p>
             )}
           </div>
-        </div> */}
-
 
         <p className="greatDay">
           {" "}
           {this.state.weatherData && this.getWeatherAdvice(this.getTemperature)}
         </p>
-
+        </>
     );
-  };
-
+    };
 export default App;
