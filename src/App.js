@@ -16,7 +16,6 @@ class App extends Component {
   showPosition = (position) => {
     this.getWeatherData(position);
   };
-
   // getWeatherData
   async getWeatherData(position) {
     // from this url - replace placename from user input box
@@ -33,7 +32,7 @@ class App extends Component {
       // the error in state is switched to true if the weatherData function fails
       this.setState({ error: true });
     }
-  };
+  }
 
   onInput = (event) => {
     this.setState({ userInput: event.target.value });
@@ -63,33 +62,33 @@ class App extends Component {
   render() {
     return (
       <>
-      <div>
-        <h1>IS IT COLD OUT?</h1>
-        <div className="inputs">
-          <input
-            onInput={this.onInput}
-            type="text"
-            value={
-              this.state.error ? `Not a valid location` : this.state.userInput
-            }
-            placeholder="ENTER LOCATION"
-          />
+        <div>
+          <h1>IS IT COLD OUT?</h1>
+          <div className="inputs">
+            <input
+              onInput={this.onInput}
+              type="text"
+              value={
+                this.state.error ? `Not a valid location` : this.state.userInput
+              }
+              placeholder="ENTER LOCATION"
+            />
 
-          <button onClick={this.onClick}>CHECKING OUTSIDE...</button>
-        </div>
+            <button onClick={this.onClick}>CHECKING OUTSIDE...</button>
+          </div>
 
-{/* 
-        <div className="weatherModules">
-          <div className="moduleTemp">
-            {this.state.weatherData.main.temp ? (
-              `Temperature is
+          <div className="weatherModules">
+            <div className="moduleTemp">
+              {this.state.weatherData.main.temp ? (
+                `Temperature is
                 ${this.getTemperature()} ${String.fromCharCode(0x00b0)} c`
-            ) : (
-              <p className="loadingtext">LOADING TEMPERATURE</p>
-            )};
+              ) : (
+                <p className="loadingtext">LOADING TEMPERATURE</p>
+              )}
+              ;
+            </div>
           </div>
-          </div>
-
+          {/* 
           <div className="moduleWind">
             {this.state.weatherData.wind.wind.speed ? (
               `Windspeed is
@@ -97,8 +96,7 @@ class App extends Component {
             ) : (
               <p className="loadingtext">LOADING WINDSPEED</p>
             )}
-          </div> */}
-
+          </div> 
 
           <div className="moduleRain">
             {this.state.weatherData.precipitation.precipitation.value ? (
@@ -108,12 +106,16 @@ class App extends Component {
               <p className="loadingtext">LOADING RAIN</p>
             )}
           </div>
+          */}
 
-        <p className="greatDay">
-          {" "}
-          {this.state.weatherData && this.getWeatherAdvice(this.getTemperature)}
-        </p>
-        </>
+          <p className="greatDay">
+            {" "}
+            {this.state.weatherData &&
+              this.getWeatherAdvice(this.getTemperature)}
+          </p>
+        </div>
+      </>
     );
-    };
+  }
+}
 export default App;
